@@ -4,4 +4,8 @@ RaspberryPi用のHaskellプログラム
 
 # ライセンス
 
-MIT
+MITライセンスです。
+
+# 開発状況
+
+開発中。
