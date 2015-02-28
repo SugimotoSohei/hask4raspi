@@ -34,6 +34,16 @@ close (x,_) = writeFile "./txt/test_close.txt" $ pin2Char x
 closeNum :: PinNum -> IO ()
 closeNum x = writeFile "./txt/test_close.txt" $ pin2Char x
 
+openArray :: [Pin] -> IO [()]
+openArray ps
+  | ps == [] = error "Error34"
+  | otherwise = sequence $ map open ps
+
+closeArray :: [Pin] -> IO [()]
+closeArray ps
+  | ps == [] = error "Error34"
+  | otherwise = sequence $ map close ps
+
 pinOut :: Pin -> Value -> IO ()
 pinOut (x,y) z
   | y == OUT = writeFile ("./txt/test_" ++ (pin2Char x) ++ "out.txt") $ show z
@@ -45,4 +55,3 @@ pinIn (x,y)
   | otherwise = error "Read error"
 
 -- gpiofile "/sys/class/gpio"
-
