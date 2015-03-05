@@ -49,7 +49,7 @@ pinOut (x,y) z
   | y == OUT = writeFile ("/sys/class/gpio/gpio" ++ (pin2Char x) ++ "/value") $ show z
   | otherwise = error "output error"
 
---pinIn :: Pin -> IO String
+pinIn :: Pin -> IO String
 pinIn (x,y)
   | y == IN = readFile ("/sys/class/gpio/gpio"++(pin2Char x)++"/value")
   | otherwise = error "Read error"
