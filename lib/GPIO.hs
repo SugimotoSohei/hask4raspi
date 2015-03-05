@@ -7,8 +7,8 @@ type Pin = (PinNum,PinMode)
 type PinNum = Int
 
 instance Show PinMode where
-  show IN  = "IN"
-  show OUT  = "OUT"
+  show IN  = "in"
+  show OUT  = "out"
 
 instance Show Value where
   show HIGH = "1"
@@ -25,14 +25,14 @@ pin2Char n
 
 open :: Pin -> IO ()
 open (x,y) = do
-  writeFile "./txt/test_open.txt" $ pin2Char x
-  writeFile "./txt/test_mode.txt" $ show y
+  writeFile "/sys/class/gpio/export" $ pin2Char x
+  writeFile ("/sys/class/gpio/gpio"++(pin2Char x)++"/direction") $ show y
 
 close :: Pin -> IO ()
-close (x,_) = writeFile "./txt/test_close.txt" $ pin2Char x
+close (x,_) = writeFile "/sys/class/gpio/unexport" $ pin2Char x
 
 closeNum :: PinNum -> IO ()
-closeNum x = writeFile "./txt/test_close.txt" $ pin2Char x
+closeNum x = writeFile "/sys/class/gpio/unexport" $ pin2Char x
 
 openArray :: [Pin] -> IO [()]
 openArray ps
@@ -46,12 +46,12 @@ closeArray ps
 
 pinOut :: Pin -> Value -> IO ()
 pinOut (x,y) z
-  | y == OUT = writeFile ("./txt/test_" ++ (pin2Char x) ++ "out.txt") $ show z
+  | y == OUT = writeFile ("/sys/class/gpio/gpio" ++ (pin2Char x) ++ "/value") $ show z
   | otherwise = error "output error"
 
 --pinIn :: Pin -> IO String
 pinIn (x,y)
-  | y == IN = readFile "./txt/test_read.txt"
+  | y == IN = readFile ("/sys/class/gpio/gpio"++(pin2Char x)++"/value")
   | otherwise = error "Read error"
 
 -- gpiofile "/sys/class/gpio"

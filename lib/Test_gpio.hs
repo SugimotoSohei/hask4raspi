@@ -1,13 +1,13 @@
 import GPIO
 
-pins = [(2,OUT),(3,IN)]
+pins = [(21,OUT),(20,IN)]
 
 main = do
   --open (2,OUT)
   --open (3,IN)
   openArray pins
-  pinOut (2,OUT) HIGH
-  a <- pinIn  (2,IN)
+  pinOut (21,OUT) HIGH
+  a <- pinIn (20,IN)
   print a
   --close (2,OUT)
   --close (3,IN)
